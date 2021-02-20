@@ -1,7 +1,8 @@
 const axios = require('axios');
+import keys from './keys.js'
 
 const url = "https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/2021-FEB-20"
-const key = "c9e3b2b5cfc443c88eb997ba219b1fcf"
+const key = keys.sportsdataIOKey
 
 let config = {
     headers: {
@@ -18,9 +19,6 @@ const fetchData = async (url) => {
             const liveGames = findInProgress(games);
             const myGames = findProspects(liveGames);
             console.log(myGames)
-        }).then(() => {
-            // console.log(inProgress)
-            // const myGames = findProspects(inProgress);
         }).then((myGames) => {
             return myGames
         }).catch((error) => {
