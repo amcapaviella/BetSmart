@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const url = "https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/2021-FEB-20"
-const key = "c9e3b2b5cfc443c88eb997ba219b1fcf"
+const key = "key"
 
 let config = {
     headers: {
