@@ -2,7 +2,11 @@ const axios = require('axios');
 import keys from './keys.js'
 
 const url = "https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/2021-FEB-20"
+<<<<<<< HEAD
 const key = keys.sportsdataIOKey
+=======
+const key = "key"
+>>>>>>> 95e12671523b92aa6e2686e57d67f31e7e8cf767
 
 let config = {
     headers: {
