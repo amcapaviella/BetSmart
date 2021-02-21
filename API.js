@@ -1,15 +1,15 @@
 const axios = require('axios');
-import keys from './keys.js'
+const key = require('./keys.js');
+
+console.log(key)
 
 const url = "https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/2021-FEB-20"
-const key = keys.sportsdataIOKey
 
 let config = {
     headers: {
         "Ocp-Apim-Subscription-Key": key
     }
 }
-
 
 //fetches collegebasketball data from sportsdata api and returns prospects for betting
 const fetchData = async (url) => {
