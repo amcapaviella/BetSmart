@@ -17,22 +17,15 @@ let config = {
     }
 }
 
-//fetches college basketball data from sportsdata api and returns prospective bets
+//fetches college basketball data from sportsdata api and returns all games currently in progress
 const fetchData = async (url) => {
-    await axios(url, config).
+    const myGames = await axios(url, config).
         then((results) => {
-            const games = results.data
-            const liveGames = findInProgress(games);
-
-            //checks if there are any live games
-            if (liveGames.length === 0) {
-                console.log('there are no live games')
-            } else {
-                const myGames = findProspects(liveGames);
-            }
+            return findInProgress(results.data);
         }).catch((error) => {
             console.log(error)
         })
+    return myGames
 }
 
 //returns all games currently in progress
@@ -99,10 +92,12 @@ const filterGames = (gameData, userInputs) => {
 }
 
 
-// calls fetchData and stores all betting prospects
-const finalProspects = fetchData(url)
 
-// prints prospect list
-console.log(finalProspects)
+// calls fetchData and stores all betting prospects
+const finalProspects = fetchData(url).then((data) => {
+    console.log(data)
+})
+
+
 
 
