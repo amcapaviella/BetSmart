@@ -10,7 +10,6 @@ let date = formatDate(Date())
 
 const url = `https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/${date}`
 
-
 //axios config
 let config = {
     headers: {
@@ -24,9 +23,13 @@ const fetchData = async (url) => {
         then((results) => {
             const games = results.data
             const liveGames = findInProgress(games);
-            const myGames = findProspects(liveGames);
-        }).then((myGames) => {
-            return myGames
+
+            //checks if there are any live games
+            if (liveGames.length === 0) {
+                console.log('there are no live games')
+            } else {
+                const myGames = findProspects(liveGames);
+            }
         }).catch((error) => {
             console.log(error)
         })
@@ -34,14 +37,15 @@ const fetchData = async (url) => {
 
 //returns all games currently in progress
 const findInProgress = (games) => {
-
     let inProgress = []
     for (var i = 0; i < games.length; i++) {
         if (games[i]["Game"]["Status"] === "InProgress") {
             inProgress.push(games[i])
         }
     }
+
     return inProgress;
+
 }
 
 //static "user inputs". - update to take user inputs from front end
@@ -84,10 +88,10 @@ const grabGameData = (game) => {
 }
 
 
-
 //filters all games where fouls are greater than input - right now using 1 because sample data fouls are all low numbers - should be 5 or 6
 const filterGames = (gameData, userInputs) => {
-    if (gameData.homeFouls >= userInputs.homeFouls && gameData.awayFouls >= userInputs.awayFouls) {
+    if (gameData.homeFouls >= 0 && gameData.awayFouls >= 0) {
+        // console.log(gameData)
         return true
     } else {
         return false
