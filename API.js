@@ -1,24 +1,30 @@
 const axios = require('axios');
 const key = require('./keys.js');
 
-console.log(key)
+//formats date for use in the url string below
+const formatDate = (date) => {
+    return date.substring(11, 15) + "-" + date.substring(4, 7) + "-" + date.substring(8, 10)
+}
 
-const url = "https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/2021-FEB-20"
+let date = formatDate(Date())
 
+const url = `https://api.sportsdata.io/v3/cbb/stats/json/BoxScores/${date}`
+
+
+//axios config
 let config = {
     headers: {
         "Ocp-Apim-Subscription-Key": key
     }
 }
 
-//fetches collegebasketball data from sportsdata api and returns prospects for betting
+//fetches college basketball data from sportsdata api and returns prospective bets
 const fetchData = async (url) => {
     await axios(url, config).
         then((results) => {
             const games = results.data
             const liveGames = findInProgress(games);
             const myGames = findProspects(liveGames);
-            console.log(myGames)
         }).then((myGames) => {
             return myGames
         }).catch((error) => {
@@ -28,6 +34,7 @@ const fetchData = async (url) => {
 
 //returns all games currently in progress
 const findInProgress = (games) => {
+
     let inProgress = []
     for (var i = 0; i < games.length; i++) {
         if (games[i]["Game"]["Status"] === "InProgress") {
@@ -37,10 +44,10 @@ const findInProgress = (games) => {
     return inProgress;
 }
 
-
+//static "user inputs". - update to take user inputs from front end
 const userInputs = {
-    homeFouls: 1,
-    awayFouls: 1,
+    homeFouls: 0,
+    awayFouls: 0,
     minutesRemaining: 12,
     scoreDifferential: [3, 8]
 }
@@ -80,7 +87,7 @@ const grabGameData = (game) => {
 
 //filters all games where fouls are greater than input - right now using 1 because sample data fouls are all low numbers - should be 5 or 6
 const filterGames = (gameData, userInputs) => {
-    if (gameData.homeFouls > userInputs.homeFouls && gameData.awayFouls > userInputs.awayFouls) {
+    if (gameData.homeFouls >= userInputs.homeFouls && gameData.awayFouls >= userInputs.awayFouls) {
         return true
     } else {
         return false
@@ -88,10 +95,10 @@ const filterGames = (gameData, userInputs) => {
 }
 
 
-//calls fetchData and stores all betting prospects 
+// calls fetchData and stores all betting prospects
 const finalProspects = fetchData(url)
 
-//prints prospect list
+// prints prospect list
 console.log(finalProspects)
 
 
