@@ -1,3 +1,6 @@
+import liveGames from './API.js'
+console.log(liveGames)
+
 //returns all games currently in progress
 const findInProgress = (games) => {
     let inProgress = []
