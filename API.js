@@ -41,12 +41,12 @@ const findInProgress = (games) => {
 
 }
 
-
-
-
 // calls fetchData and stores all betting prospects
-exports.finalProspects = fetchData(url).then((data) => {
-    console.log(data)
-    console.log('There are ' + data.length + ' live games')
-})
+setInterval(() => {
+    fetchData(url).then((data) => {
+        console.log(data)
+        console.log('there are ' + data.length + ' games live')
+        return data
+    })
+}, 15000)
 
