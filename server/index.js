@@ -4,9 +4,7 @@ const app = express();
 
 const port = 3000;
 
-app.get('/', (req, res) => {
-    res.send('Welcome to BetSmart')
-})
+app.use(express.static("client/dist"))
 
 app.listen(port, () => {
     console.log(`We are listening on port ${port}`)
