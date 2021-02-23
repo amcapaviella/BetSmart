@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "nodemon server/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -12,6 +13,9 @@
     "axios": "^0.21.1",
     "cbb-npm": "^1.0.6",
     "cheerio": "^1.0.0-rc.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7",
+    "parcel-bundler": "^1.12.4",
     "puppeteer": "^7.1.0"
   },
   "devDependencies": {
